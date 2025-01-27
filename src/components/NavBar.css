@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'Magneto';
+    src: url('fonts/Magneto/Magneto_bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.navbar {
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.navbar-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-section a {
+    padding: 10% 1vw;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: .2s ;
+}
+
+
+.navbar-section a:hover {
+    background-color: #88d2dd3c;
+    border-radius: 10px;
+}
+
+.navbar-section a img {
+    padding-right: 25px;
+    height: 3vh;
+    min-height: 15px;
+}
+
+.navbar-section .navbar-exit {
+    padding-left: .2vw;
+}
+
+.navbar-section a {
+    text-decoration: none;
+    color: #00acc1;
+    font-size: 1.2em;
+}
+
+.navbar-section header {
+    display: flex;
+    align-items: center;
+    padding: 12% 3vw;
+}
+
+.navbar-section span {
+    font-size: 2em;
+    font-family: 'Magneto', sans-serif;
+    color: #009196;
+    text-align: center;
+}
+
+.navbar-section img {
+    height: 8vh;
+}
+
+.navbar-section nav, .navbar-section footer {
+    display: flex;
+    margin: 15% 3vw;
+    flex-direction: column;
+}
+
+@media  (max-width: 800px) {
+    .navbar {
+        position: fixed;
+    }
+}
+
