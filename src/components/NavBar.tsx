@@ -1,4 +1,6 @@
 import './NavBar.css'
+import { NavLink } from 'react-router-dom'
+
 function NavBar() {
   return (
     <div className='navbar'>
@@ -9,29 +11,29 @@ function NavBar() {
             </header>
             <nav>
                 <ul>
-                    <a href="">
+                    <NavLink to="/home" className={({isActive}) => isActive ? 'active' : ''}>
                         <img src="assets/svg/navbar/home.svg" alt="" /> 
                         <p>Inicio</p>
-                    </a>
+                    </NavLink>
                 </ul>
                 <ul>
-                    <a href="">
+                    <NavLink  to="/stations" className={({isActive}) => isActive ? 'active' : ''}   >
                         <img src="assets/svg/navbar/hydroponic.svg" alt="" /> 
                         <p>Estaciones</p>
-                    </a>
+                    </NavLink>
 
                 </ul>
                 <ul>
-                    <a href="">
+                    <NavLink to="/plants" className={({isActive}) => isActive ? 'active' : ''}  >
                         <img src="assets/svg/navbar/plants.svg" alt="" /> 
                         <p>Plantas</p>
-                    </a>  
+                    </NavLink>  
                 </ul>
                 <ul>
-                    <a href="">
+                    <NavLink to="/stats" className={({isActive}) => isActive ? 'active' : ''}>
                         <img src="assets/svg/navbar/stats.svg" alt="" /> 
                         <p>Estadistícas</p>
-                    </a>  
+                    </NavLink>  
                 </ul>
             </nav>
             <footer>

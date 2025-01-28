@@ -25,16 +25,19 @@
     align-items: center;
     text-decoration: none;
     transition: .2s ;
+    color: #00acc1;
+    font-size: 1.2em;
+    border-left: 4px solid transparent;
 }
 
 
 .navbar-section a:hover {
     background-color: #88d2dd3c;
-    border-radius: 10px;
 }
 
 .navbar-section a img {
     padding-right: 25px;
+    padding-left: 2%;
     height: 3vh;
     min-height: 15px;
 }
@@ -43,10 +46,8 @@
     padding-left: .2vw;
 }
 
-.navbar-section a {
-    text-decoration: none;
-    color: #00acc1;
-    font-size: 1.2em;
+.navbar-section .active{
+    border-left: 4px solid #00acc1;
 }
 
 .navbar-section header {
