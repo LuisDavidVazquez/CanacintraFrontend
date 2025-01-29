@@ -1,17 +1,11 @@
 import './Station.css'
-import Title from '../../utils/Title' 
-import NavBar from '../../components/NavBar'
-import Header from '../../components/Header'
 
-function Stations() {
+function Station() {
   return (
-    <div className='station'>
-        <Title subtitle="Estaciones"/>
-        <NavBar/>
-        <Header/>
-        Stations
+    <div className="station">
+      {/* Contenido específico de Home */}
     </div>
   )
 }
 
-export default Stations
+export default Station

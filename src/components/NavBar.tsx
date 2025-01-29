@@ -1,9 +1,21 @@
 import './NavBar.css'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
-function NavBar() {
+interface NavBarProps {
+    isActive: boolean;
+    isMenuOpen: boolean;
+    onMenuToggle: () => void;
+}
+
+function NavBar({ isActive, isMenuOpen, onMenuToggle }: NavBarProps) {
+
+
+    const logout = () => {
+        localStorage.removeItem('token');
+    }
+
   return (
-    <div className='navbar'>
+    <div className={isActive ? 'navbar-activate' : 'navbar'}>
         <div className='navbar-section'>
             <header>
                 <span>Hydrop</span>
@@ -38,22 +50,20 @@ function NavBar() {
             </nav>
             <footer>
                 <ul>
-                    <a href="">
+                    <NavLink to="/settings" className={({isActive}) => isActive ? 'active' : ''}>
                         <img src="assets/svg/navbar/settings.svg" alt="" /> 
                         <p>Ajustes</p>
-                    </a>  
+                    </NavLink>  
                 </ul>
                 <ul>
-                    <a href="">
+                    <Link to="/login" onClick={() => logout()}>
                         <img className='navbar-exit' src="assets/svg/navbar/exit.svg" alt="" /> 
                         <p>Salir</p>
-                    </a>  
+                    </Link>  
                 </ul>
             </footer>
         </div>
-        {/*<div>
-            <button>Salir</button>
-        </div>*/}
+        <button onClick={onMenuToggle} className={isMenuOpen ? 'navbar-exit-deactivate' : 'navbar-exit-activate'} ></button>
     </div>
   )
 }
