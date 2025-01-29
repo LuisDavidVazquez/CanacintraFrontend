@@ -116,3 +116,103 @@
     border-radius: 4px;
     font-size: 0.9em;
 }
+
+.controles {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px;
+}
+
+.boton-agregar,
+.boton-cosechadas,
+.boton-guardar {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.boton-agregar {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.boton-agregar:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.boton-cosechadas {
+    background-color: #FFA000;
+    color: white;
+}
+
+.formulario-planta {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.campo-formulario label {
+    font-weight: bold;
+    color: #666;
+}
+
+.campo-formulario select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.boton-guardar {
+    background-color: #2196F3;
+    color: white;
+    margin-top: 10px;
+}
+
+.boton-guardar:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.lista-cosechadas {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.planta-cosechada {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.planta-cosechada img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.info-cosechada {
+    flex: 1;
+}
+
+.info-cosechada h3 {
+    margin: 0 0 5px 0;
+}
+
+.info-cosechada p {
+    margin: 3px 0;
+    color: #666;
+}
