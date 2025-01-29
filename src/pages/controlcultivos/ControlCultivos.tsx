@@ -383,6 +383,17 @@ const ControlCultivos = () => {
                 </button>
               </div>
             )}
+            {plantaSeleccionada.status === 'marchitado' && (
+              <div className="modal-actions">
+                <button 
+                  className="boton-eliminar"
+
+                  onClick={iniciarEliminacion}
+                >
+                  Eliminar Planta
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
