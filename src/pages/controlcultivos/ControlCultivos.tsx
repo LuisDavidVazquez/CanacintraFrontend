@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './ControlCultivos.css'
+import Title from '../../utils/Title'
 import CalendarioCultivos from './components/CalendarioCultivos'
 
 interface PlantaBase {
@@ -268,8 +269,10 @@ const ControlCultivos = () => {
 
   return (
     <div className="control-cultivos">
+      <Title subtitle="Control de Cultivos"/>
       <div className="controles">
         <button 
+
           className="boton-calendario"
           onClick={() => setMostrarCalendario(true)}
         >
