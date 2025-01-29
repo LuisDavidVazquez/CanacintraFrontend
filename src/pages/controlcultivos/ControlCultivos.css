@@ -24,6 +24,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    aspect-ratio: 1;
+    width: 100%;
+    min-width: 150px;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .planta-card:hover {
@@ -31,8 +36,10 @@
 }
 
 .planta-card img {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    max-height: 150px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -41,6 +48,7 @@
 .planta-card h3 {
     margin: 10px 0;
     color: #333;
+    font-size: 1.2em;
 }
 
 .estado-badge {
@@ -70,6 +78,8 @@
     width: 90%;
     max-width: 500px;
     position: relative;
+    width: 95%;
+    padding: 15px;
 }
 
 .cerrar-modal {
@@ -215,4 +225,104 @@
 .info-cosechada p {
     margin: 3px 0;
     color: #666;
+}
+
+.torre-hidroponica {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.fila-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.slot-vacio {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border: 2px dashed #ccc;
+    width: 100%;
+    min-width: 150px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.slot-vacio:hover {
+    transform: translateY(-5px);
+    border-color: #4CAF50;
+}
+
+.slot-placeholder {
+    font-size: 2em;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .torre-hidroponica {
+        padding: 10px;
+    }
+
+    .fila-slots {
+        gap: 10px;
+    }
+
+    .planta-card, .slot-vacio {
+        min-width: 100px;
+    }
+
+    .planta-card img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .modal-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .controles {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .boton-agregar,
+    .boton-cosechadas {
+        width: 100%;
+    }
+
+    .planta-card h3 {
+        font-size: 0.9em;
+    }
+
+    .estado-badge {
+        font-size: 0.8em;
+    }
+
+    .slot-number {
+        font-size: 0.8em;
+    }
 }

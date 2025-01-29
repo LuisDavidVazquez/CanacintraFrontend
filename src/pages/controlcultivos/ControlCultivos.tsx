@@ -85,6 +85,51 @@ const ControlCultivos = () => {
       plantingDate: '2024-01-10',
       estimatedHarvestDate: '2024-02-20',
       image: '/assets/img/plants/albahaca.png'
+    },
+    {
+        id: 6,
+        slot: 6,
+        category: 'Apio',
+        status: 'creciendo',
+        plantingDate: '2024-01-10',
+        estimatedHarvestDate: '2024-02-20',
+        image: '/assets/img/plants/apio.png'
+    },
+    {
+        id: 7,
+        slot: 7,
+        category: 'Apio',
+        status: 'creciendo',
+        plantingDate: '2024-01-10',
+        estimatedHarvestDate: '2024-02-20',
+        image: '/assets/img/plants/apio.png'
+    },
+    {
+        id: 8,
+        slot: 8,
+        category: 'Apio',
+        status: 'creciendo',
+        plantingDate: '2024-01-10',
+        estimatedHarvestDate: '2024-02-20',
+        image: '/assets/img/plants/apio.png'
+    },
+    {
+        id: 9,
+        slot: 9,
+        category: 'Apio',
+        status: 'creciendo',
+        plantingDate: '2024-01-10',
+        estimatedHarvestDate: '2024-02-20',
+        image: '/assets/img/plants/apio.png'
+    },
+    {
+        id: 10,
+        slot: 10,
+        category: 'Cilantro',
+        status: 'creciendo',
+        plantingDate: '2024-01-10',
+        estimatedHarvestDate: '2024-02-20',
+        image: '/assets/img/plants/cilantro.png'
     }
   ]
 
@@ -132,49 +177,69 @@ const ControlCultivos = () => {
     setErrorImagen(prev => ({...prev, [plantaId]: true}))
   }
 
+  const renderSlot = (slotNumber: number) => {
+    const planta = plantasActivas.find(p => p.slot === slotNumber);
+    
+    if (planta) {
+      return (
+        <div 
+          key={slotNumber}
+          className="planta-card"
+          onClick={() => abrirDetalles(planta)}
+        >
+          <div className="slot-number">Espacio {slotNumber}</div>
+          <img 
+            src={planta.image} 
+            alt={planta.category}
+            onError={() => handleImageError(planta.id)}
+          />
+          {errorImagen[planta.id] && (
+            <div className="error-imagen">Error al cargar la imagen</div>
+          )}
+          <h3>{planta.category}</h3>
+          <span 
+            className="estado-badge"
+            style={{ backgroundColor: obtenerColorEstado(planta.status) }}
+          >
+            {capitalizarPrimeraLetra(planta.status)}
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <div 
+        key={slotNumber}
+        className="slot-vacio"
+        onClick={() => {
+          setNuevaPlanta(prev => ({ ...prev, slot: slotNumber }));
+          setMostrarFormulario(true);
+        }}
+      >
+        <div className="slot-number">Espacio {slotNumber}</div>
+        <div className="slot-placeholder">+</div>
+      </div>
+    );
+  };
+
   return (
     <div className="control-cultivos">
       <div className="controles">
         <button 
-          className="boton-agregar"
-          onClick={() => setMostrarFormulario(true)}
-          disabled={slotsDisponibles.length === 0}
-        >
-          Agregar Nueva Planta
-        </button>
-        <button 
           className="boton-cosechadas"
           onClick={() => setMostrarCosechadas(true)}
         >
-          Historial de Plantas Cosechadas
+          Ver Plantas Cosechadas
         </button>
       </div>
 
-      <div className="plantas-grid">
-        {plantasActivas.map((planta) => (
-          <div 
-            key={planta.id} 
-            className="planta-card"
-            onClick={() => abrirDetalles(planta)}
-          >
-            <div className="slot-number">Espacio {planta.slot}</div>
-            <img 
-              src={planta.image} 
-              alt={planta.category}
-              onError={() => handleImageError(planta.id)}
-            />
-            {errorImagen[planta.id] && (
-              <div className="error-imagen">
-                Error al cargar la imagen
-              </div>
-            )}
-            <h3>{planta.category}</h3>
-            <span 
-              className="estado-badge"
-              style={{ backgroundColor: obtenerColorEstado(planta.status) }}
-            >
-              {capitalizarPrimeraLetra(planta.status)}
-            </span>
+      <div className="torre-hidroponica">
+        {Array.from({ length: 7 }, (_, fila) => (
+          <div key={fila} className="fila-slots">
+            {Array.from({ length: 3 }, (_, columna) => {
+              const slotNumber = fila * 3 + columna + 1;
+              return renderSlot(slotNumber);
+            })}
           </div>
         ))}
       </div>
@@ -194,17 +259,6 @@ const ControlCultivos = () => {
                   <option value="">Selecciona una categoría</option>
                   {CATEGORIAS_PLANTAS.map(cat => (
                     <option key={cat.valor} value={cat.valor}>{cat.valor}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="campo-formulario">
-                <label>Slot:</label>
-                <select 
-                  value={nuevaPlanta.slot}
-                  onChange={e => setNuevaPlanta({...nuevaPlanta, slot: Number(e.target.value)})}
-                >
-                  {slotsDisponibles.map(slot => (
-                    <option key={slot} value={slot}>Slot {slot}</option>
                   ))}
                 </select>
               </div>
