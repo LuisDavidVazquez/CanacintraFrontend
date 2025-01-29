@@ -120,7 +120,8 @@
 
 .controles {
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    margin-bottom: 20px;
     padding: 0 20px;
 }
 
@@ -148,6 +149,36 @@
 .boton-cosechadas {
     background-color: #FFA000;
     color: white;
+}
+
+.boton-calendario {
+    background-color: #00acc1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.boton-calendario:before {
+    font-size: 1.2em;
+}
+
+.boton-calendario:hover {
+    background-color: #0097a7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.boton-calendario:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .formulario-planta {
@@ -252,11 +283,6 @@
 .slot-vacio:hover {
     transform: translateY(-5px);
     border-color: #4CAF50;
-}
-
-.slot-placeholder {
-    font-size: 2em;
-    color: #ccc;
 }
 
 .slot-placeholder {
@@ -397,7 +423,7 @@
 
   .controles {
     flex-direction: column;
-    padding: 0 5px;
+    padding: 0 10px;
   }
 
   .planta-card {
@@ -422,6 +448,12 @@
   .slot-number {
     font-size: 0.7em;
     padding: 2px 4px;
+  }
+
+  .boton-calendario {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
   }
 }
 
@@ -473,5 +505,14 @@
   .modal-actions button {
     padding: 8px 15px;
     font-size: 0.9em;
+  }
+
+  .boton-calendario {
+    font-size: 0.9em;
+    padding: 10px 15px;
+  }
+
+  .boton-calendario:before {
+    font-size: 1.1em;
   }
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './ControlCultivos.css'
+import CalendarioCultivos from './components/CalendarioCultivos'
 
 interface PlantaBase {
   id: number
@@ -40,6 +41,7 @@ const ControlCultivos = () => {
     categoria: '',
     slot: 1
   })
+  const [mostrarCalendario, setMostrarCalendario] = useState(false)
 
   // Datos de ejemplo - esto debería venir de tu API
   const plantas: Planta[] = [
@@ -254,6 +256,12 @@ const ControlCultivos = () => {
     <div className="control-cultivos">
       <div className="controles">
         <button 
+          className="boton-calendario"
+          onClick={() => setMostrarCalendario(true)}
+        >
+          Ver Calendario
+        </button>
+        <button 
           className="boton-cosechadas"
           onClick={() => setMostrarCosechadas(true)}
         >
@@ -391,6 +399,13 @@ const ControlCultivos = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {mostrarCalendario && (
+        <CalendarioCultivos 
+          plantas={plantas}
+          onClose={() => setMostrarCalendario(false)}
+        />
       )}
     </div>
   )
