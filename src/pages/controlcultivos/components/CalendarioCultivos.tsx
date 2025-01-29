@@ -1,25 +1,16 @@
 import { useState } from 'react'
 import './CalendarioCultivos.css'
+import { Planta } from '../ControlCultivos'
 
 interface Evento {
   id: number
-  tipo: 'siembra' | 'cosecha' | 'marchito'
+  tipo: 'creciendo' | 'cosechado' | 'marchitado'
   fecha: string
   planta: string
 }
 
-interface PlantaBase {
-  id: number
-  category: string
-  status: 'creciendo' | 'cosechado' | 'marchito'
-  createdAt: string    // Fecha de siembra/creación
-  updatedAt: string    // Última actualización (fecha de cosecha o marchitado)
-  slot: number
-  image: string
-}
-
 interface CalendarioCultivosProps {
-  plantas: PlantaBase[]
+  plantas: Planta[]
   onClose: () => void
 }
 
@@ -30,21 +21,32 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
   const [fechaBusqueda, setFechaBusqueda] = useState('')
 
   const eventos: Evento[] = [
-    // Eventos de siembra (creación) para todas las plantas
+    // Eventos de siembra para todas las plantas
     ...plantas.map(p => ({
       id: p.id * 3 - 2,
-      tipo: 'siembra' as const,
-      fecha: p.createdAt,
+      tipo: 'creciendo' as const,
+      fecha: p.createdAt.split('T')[0] + 'T12:00:00',
       planta: p.category
     })),
-    // Eventos de cosecha o marchitado (según el estado final)
+    // Eventos de cosecha
     ...plantas
-      .filter(p => p.status !== 'creciendo' && p.createdAt !== p.updatedAt)
+      .filter(p => p.status === 'cosechado')
       .map(p => ({
         id: p.id * 3 - 1,
-        tipo: p.status as 'cosecha' | 'marchito',
+        tipo: 'cosechado' as const,
+        fecha: p.updatedAt.split('T')[0] + 'T12:00:00',
+        planta: p.category
+      })),
+    // Eventos de marchitado
+    ...plantas
+      .filter(p => p.status === 'marchitado')
+
+      .map(p => ({
+        id: p.id * 3,
+        tipo: 'marchitado' as const,
         fecha: p.updatedAt,
         planta: p.category
+
       }))
   ].sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
 
@@ -65,21 +67,23 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
     })
   }
 
-  const obtenerIcono = (tipo: 'siembra' | 'cosecha' | 'marchito') => {
+  const obtenerIcono = (tipo: 'creciendo' | 'cosechado' | 'marchitado') => {
     switch (tipo) {
-      case 'siembra': return '🌱'
-      case 'cosecha': return '🌾'
-      case 'marchito': return '💀'
+      case 'creciendo': return '🌱'
+      case 'cosechado': return '🌾'
+      case 'marchitado': return '💀'
     }
   }
 
-  const obtenerColor = (tipo: 'siembra' | 'cosecha' | 'marchito') => {
+
+  const obtenerColor = (tipo: 'creciendo' | 'cosechado' | 'marchitado') => {
     switch (tipo) {
-      case 'siembra': return '#4CAF50'
-      case 'cosecha': return '#FFC107'
-      case 'marchito': return '#dc3545'
+      case 'creciendo': return '#4CAF50'
+      case 'cosechado': return '#FFC107'
+      case 'marchitado': return '#dc3545'
     }
   }
+
 
   const mesAnterior = () => {
     setMesActual(new Date(mesActual.getFullYear(), mesActual.getMonth() - 1))
@@ -106,10 +110,6 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
     setEventoSeleccionado(null)
   }
 
-  const irAHoy = () => {
-    setMesActual(new Date())
-  }
-
   const buscarFecha = (e: React.FormEvent) => {
     e.preventDefault()
     if (fechaBusqueda) {
@@ -126,7 +126,6 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
     const diasCalendario = []
     const diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
-    // Agregar encabezados de días
     diasCalendario.push(
       <div key="headers" className="dias-semana">
         {diasSemana.map(dia => (
@@ -135,7 +134,7 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
       </div>
     )
 
-    let dias = []
+    const dias = []
     
     // Agregar espacios vacíos antes del primer día
     for (let i = 0; i < primerDia; i++) {
@@ -158,6 +157,7 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
                   e.stopPropagation()
                   mostrarDetallesEvento(evento)
                 }}
+
                 title={`${evento.planta} - ${evento.tipo}`}
               >
                 {obtenerIcono(evento.tipo)}
@@ -178,39 +178,37 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
         <button className="cerrar-modal" onClick={onClose}>×</button>
         <h2>Calendario de Cultivos</h2>
         
-        <div className="calendario-controles">
-          <div className="vista-selector">
-            <button 
-              className={vistaCalendario ? 'activo' : ''} 
-              onClick={() => setVistaCalendario(true)}
-            >
-              Vista Calendario
-            </button>
-            <button 
-              className={!vistaCalendario ? 'activo' : ''} 
-              onClick={() => setVistaCalendario(false)}
-            >
-              Vista Lista
-            </button>
-          </div>
-
-          <div className="busqueda-fecha">
-            <form onSubmit={buscarFecha} className="formulario-busqueda">
-              <input
-                type="date"
-                value={fechaBusqueda}
-                onChange={(e) => setFechaBusqueda(e.target.value)}
-                className="input-fecha"
-              />
-              <button type="submit" className="boton-buscar">
-                Ir a Fecha
-              </button>
-            </form>
-          </div>
+        <div className="vista-selector">
+          <button 
+            className={vistaCalendario ? 'activo' : ''} 
+            onClick={() => setVistaCalendario(true)}
+          >
+            Vista Calendario
+          </button>
+          <button 
+            className={!vistaCalendario ? 'activo' : ''} 
+            onClick={() => setVistaCalendario(false)}
+          >
+            Vista Lista
+          </button>
         </div>
 
         {vistaCalendario ? (
           <div className="calendario-vista">
+            <div className="busqueda-fecha">
+              <form onSubmit={buscarFecha} className="formulario-busqueda">
+                <input
+                  type="date"
+                  value={fechaBusqueda}
+                  onChange={(e) => setFechaBusqueda(e.target.value)}
+                  className="input-fecha"
+                />
+                <button type="submit" className="boton-buscar">
+                  Ir a Fecha
+                </button>
+              </form>
+            </div>
+            
             <div className="calendario-header">
               <button onClick={mesAnterior}>&lt;</button>
               <h3>
@@ -238,8 +236,9 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
                   <span className="evento-fecha">{formatearFecha(evento.fecha)}</span>
                   <span className="evento-planta">{evento.planta}</span>
                   <span className="evento-tipo">
-                    {evento.tipo === 'siembra' ? 'Sembrado' :
-                     evento.tipo === 'cosecha' ? 'Cosechado' : 'Marchitado'}
+                    {evento.tipo === 'creciendo' ? 'Creciendo' :
+                     evento.tipo === 'cosechado' ? 'Cosechado' : 'Marchitado'}
+
                   </span>
                 </div>
               </div>
@@ -259,9 +258,10 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
               </div>
               <div className="detalle-info">
                 <p><strong>Evento: </strong>
-                  {eventoSeleccionado.tipo === 'siembra' ? 'Sembrado' :
-                   eventoSeleccionado.tipo === 'cosecha' ? 'Cosechado' : 'Marchitado'}
+                  {eventoSeleccionado.tipo === 'creciendo' ? 'Creciendo' :
+                   eventoSeleccionado.tipo === 'cosechado' ? 'Cosechado' : 'Marchitado'}
                 </p>
+
                 <p><strong>Fecha: </strong>{formatearFecha(eventoSeleccionado.fecha)}</p>
               </div>
             </div>

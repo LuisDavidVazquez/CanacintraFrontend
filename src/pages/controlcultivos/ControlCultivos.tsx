@@ -5,7 +5,7 @@ import CalendarioCultivos from './components/CalendarioCultivos'
 interface PlantaBase {
   id: number
   category: string
-  status: 'creciendo' | 'cosechado' | 'marchito'
+  status: 'creciendo' | 'cosechado' | 'marchitado'
   createdAt: string    // Fecha de siembra/creación
   updatedAt: string    // Última actualización (fecha de cosecha o marchitado)
   slot: number
@@ -22,10 +22,10 @@ interface PlantaCosechada extends PlantaBase {
 }
 
 interface PlantaMarchita extends PlantaBase {
-  status: 'marchito'
+  status: 'marchitado'
 }
 
-type Planta = PlantaActiva | PlantaCosechada | PlantaMarchita
+export type Planta = PlantaActiva | PlantaCosechada | PlantaMarchita
 
 const CATEGORIAS_PLANTAS = [
   { valor: 'Lechuga', imagen: '/assets/img/plants/lettuce.png' },
@@ -33,8 +33,6 @@ const CATEGORIAS_PLANTAS = [
   { valor: 'Cilantro', imagen: '/assets/img/plants/cilantro.png' },
   { valor: 'Albahaca', imagen: '/assets/img/plants/albahaca.png' }
 ]
-
-const MAX_SLOTS = 21
 
 const ControlCultivos = () => {
   const [plantaSeleccionada, setPlantaSeleccionada] = useState<Planta | null>(null)
@@ -65,7 +63,7 @@ const ControlCultivos = () => {
       slot: 2,
       category: 'Rúcula',
       status: 'cosechado',
-      createdAt: '2025-02-01',      // Fecha de siembra
+      createdAt: '2025-02-01',      // Fecha de siembra en formato YYYY-MM-DD
       updatedAt: '2025-03-15',      // Fecha en que se cosechó
       image: '/assets/img/plants/rucula.png'
     },
@@ -73,9 +71,9 @@ const ControlCultivos = () => {
       id: 3,
       slot: 3,
       category: 'Cilantro',
-      status: 'marchito',
+      status: 'marchitado',
       createdAt: '2025-01-15',      // Fecha de siembra
-      updatedAt: '2025-02-01',      // Fecha en que se marchitó
+      updatedAt: '2025-02-03',      // Fecha en que se marchitó
       image: '/assets/img/plants/cilantro.png'
     },
     {
@@ -158,10 +156,6 @@ const ControlCultivos = () => {
 
   const plantasActivas = plantas.filter(p => p.status !== 'cosechado')
   const plantasCosechadas = plantas.filter(p => p.status === 'cosechado')
-  const slotsOcupados = new Set(plantasActivas.map(p => p.slot))
-
-  const slotsDisponibles = Array.from({ length: MAX_SLOTS }, (_, i) => i + 1)
-    .filter(slot => !slotsOcupados.has(slot))
 
   const agregarPlanta = () => {
     // Aquí implementarías la lógica para agregar la planta a tu backend
