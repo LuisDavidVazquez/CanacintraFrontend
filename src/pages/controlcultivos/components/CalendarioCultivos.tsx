@@ -12,9 +12,10 @@ interface PlantaBase {
   id: number
   category: string
   status: 'creciendo' | 'cosechado' | 'marchito'
-  plantingDate: string
-  estimatedHarvestDate: string
-  witheredDate?: string  // Nueva propiedad opcional
+  createdAt: string    // Fecha de siembra/creación
+  updatedAt: string    // Última actualización (fecha de cosecha o marchitado)
+  slot: number
+  image: string
 }
 
 interface CalendarioCultivosProps {
@@ -29,26 +30,20 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
   const [fechaBusqueda, setFechaBusqueda] = useState('')
 
   const eventos: Evento[] = [
+    // Eventos de siembra (creación) para todas las plantas
     ...plantas.map(p => ({
       id: p.id * 3 - 2,
       tipo: 'siembra' as const,
-      fecha: p.plantingDate,
+      fecha: p.createdAt,
       planta: p.category
     })),
+    // Eventos de cosecha o marchitado (según el estado final)
     ...plantas
-      .filter(p => p.status === 'cosechado')
+      .filter(p => p.status !== 'creciendo' && p.createdAt !== p.updatedAt)
       .map(p => ({
         id: p.id * 3 - 1,
-        tipo: 'cosecha' as const,
-        fecha: p.estimatedHarvestDate,
-        planta: p.category
-      })),
-    ...plantas
-      .filter(p => p.status === 'marchito' && p.witheredDate)
-      .map(p => ({
-        id: p.id * 3,
-        tipo: 'marchito' as const,
-        fecha: p.witheredDate!,
+        tipo: p.status as 'cosecha' | 'marchito',
+        fecha: p.updatedAt,
         planta: p.category
       }))
   ].sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
@@ -125,33 +120,6 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
     }
   }
 
-  const agruparEventosPorMes = () => {
-    const eventosAgrupados: { [key: string]: Evento[] } = {}
-    
-    eventos.forEach(evento => {
-      const fecha = new Date(evento.fecha)
-      const mesKey = fecha.toLocaleDateString('es-ES', { 
-        year: 'numeric',
-        month: 'long'
-      })
-      
-      if (!eventosAgrupados[mesKey]) {
-        eventosAgrupados[mesKey] = []
-      }
-      eventosAgrupados[mesKey].push(evento)
-    })
-
-    // Ordenar los meses cronológicamente
-    return Object.entries(eventosAgrupados)
-      .sort(([mesA], [mesB]) => {
-        const [mesADate] = mesA.split(' de ')
-        const [mesBDate] = mesB.split(' de ')
-        const fechaA = new Date(mesA)
-        const fechaB = new Date(mesB)
-        return fechaB.getTime() - fechaA.getTime()
-      })
-  }
-
   const renderizarCalendario = () => {
     const diasEnMes = obtenerDiasEnMes(mesActual)
     const primerDia = obtenerPrimerDiaSemana(mesActual)
@@ -226,21 +194,19 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
             </button>
           </div>
 
-          {vistaCalendario && (
-            <div className="busqueda-fecha">
-              <form onSubmit={buscarFecha} className="formulario-busqueda">
-                <input
-                  type="date"
-                  value={fechaBusqueda}
-                  onChange={(e) => setFechaBusqueda(e.target.value)}
-                  className="input-fecha"
-                />
-                <button type="submit" className="boton-buscar">
-                  Ir a Fecha
-                </button>
-              </form>
-            </div>
-          )}
+          <div className="busqueda-fecha">
+            <form onSubmit={buscarFecha} className="formulario-busqueda">
+              <input
+                type="date"
+                value={fechaBusqueda}
+                onChange={(e) => setFechaBusqueda(e.target.value)}
+                className="input-fecha"
+              />
+              <button type="submit" className="boton-buscar">
+                Ir a Fecha
+              </button>
+            </form>
+          </div>
         </div>
 
         {vistaCalendario ? (
@@ -261,33 +227,20 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
           </div>
         ) : (
           <div className="lista-vista">
-            {agruparEventosPorMes().map(([mes, eventosDelMes]) => (
-              <div key={mes} className="mes-grupo">
-                <h3 className="mes-titulo">{mes}</h3>
-                <div className="eventos-mes">
-                  {eventosDelMes.map(evento => (
-                    <div 
-                      key={evento.id} 
-                      className="evento-lista"
-                      style={{ borderLeftColor: obtenerColor(evento.tipo) }}
-                      onClick={() => mostrarDetallesEvento(evento)}
-                    >
-                      <span className="evento-icono">{obtenerIcono(evento.tipo)}</span>
-                      <div className="evento-info">
-                        <span className="evento-fecha">
-                          {new Date(evento.fecha).toLocaleDateString('es-ES', {
-                            day: 'numeric',
-                            month: 'long'
-                          })}
-                        </span>
-                        <span className="evento-planta">{evento.planta}</span>
-                        <span className="evento-tipo">
-                          {evento.tipo === 'siembra' ? 'Sembrado' :
-                           evento.tipo === 'cosecha' ? 'Cosechado' : 'Marchitado'}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+            {eventos.map(evento => (
+              <div 
+                key={evento.id} 
+                className="evento-lista"
+                style={{ borderLeftColor: obtenerColor(evento.tipo) }}
+              >
+                <span className="evento-icono">{obtenerIcono(evento.tipo)}</span>
+                <div className="evento-info">
+                  <span className="evento-fecha">{formatearFecha(evento.fecha)}</span>
+                  <span className="evento-planta">{evento.planta}</span>
+                  <span className="evento-tipo">
+                    {evento.tipo === 'siembra' ? 'Sembrado' :
+                     evento.tipo === 'cosecha' ? 'Cosechado' : 'Marchitado'}
+                  </span>
                 </div>
               </div>
             ))}

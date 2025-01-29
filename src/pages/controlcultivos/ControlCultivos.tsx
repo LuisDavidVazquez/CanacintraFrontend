@@ -6,15 +6,15 @@ interface PlantaBase {
   id: number
   category: string
   status: 'creciendo' | 'cosechado' | 'marchito'
-  plantingDate: string
-  estimatedHarvestDate: string
-  witheredDate?: string
+  createdAt: string    // Fecha de siembra/creación
+  updatedAt: string    // Última actualización (fecha de cosecha o marchitado)
+  slot: number
   image: string
 }
 
 interface PlantaActiva extends PlantaBase {
   status: 'creciendo'
-  slot: number
+  estimatedHarvestDate: string
 }
 
 interface PlantaCosechada extends PlantaBase {
@@ -23,8 +23,6 @@ interface PlantaCosechada extends PlantaBase {
 
 interface PlantaMarchita extends PlantaBase {
   status: 'marchito'
-  witheredDate: string
-  slot: number
 }
 
 type Planta = PlantaActiva | PlantaCosechada | PlantaMarchita
@@ -57,16 +55,18 @@ const ControlCultivos = () => {
       slot: 1,
       category: 'Lechuga',
       status: 'creciendo',
-      plantingDate: '2025-03-15',
+      createdAt: '2025-03-15',      // Fecha de siembra
+      updatedAt: '2025-03-15',      // Igual a createdAt al inicio
       estimatedHarvestDate: '2025-04-15',
       image: '/assets/img/plants/lettuce.png'
     },
     {
       id: 2,
+      slot: 2,
       category: 'Rúcula',
       status: 'cosechado',
-      plantingDate: '2025-02-01',
-      estimatedHarvestDate: '2025-03-15',
+      createdAt: '2025-02-01',      // Fecha de siembra
+      updatedAt: '2025-03-15',      // Fecha en que se cosechó
       image: '/assets/img/plants/rucula.png'
     },
     {
@@ -74,9 +74,8 @@ const ControlCultivos = () => {
       slot: 3,
       category: 'Cilantro',
       status: 'marchito',
-      plantingDate: '2025-01-15',
-      estimatedHarvestDate: '2025-02-15',
-      witheredDate: '2025-02-01',
+      createdAt: '2025-01-15',      // Fecha de siembra
+      updatedAt: '2025-02-01',      // Fecha en que se marchitó
       image: '/assets/img/plants/cilantro.png'
     },
     {
@@ -84,8 +83,9 @@ const ControlCultivos = () => {
       slot: 4,
       category: 'Apio',
       status: 'creciendo',
-      plantingDate: '2025-01-10',
-      estimatedHarvestDate: '2025-02-20',
+      createdAt: '2025-01-10',
+      updatedAt: '2025-02-20',
+      estimatedHarvestDate: '2025-03-10',
       image: '/assets/img/plants/apio.png'
     },
     {
@@ -93,56 +93,68 @@ const ControlCultivos = () => {
       slot: 5,
       category: 'Albahaca',
       status: 'creciendo',
-      plantingDate: '2025-01-10',
-      estimatedHarvestDate: '2025-02-20',
+      createdAt: '2025-01-10',
+      updatedAt: '2025-02-20',
+      estimatedHarvestDate: '2025-03-10',
       image: '/assets/img/plants/albahaca.png'
     },
+
     {
         id: 6,
         slot: 6,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2025-01-10',
-        estimatedHarvestDate: '2025-02-20',
+        createdAt: '2025-01-10',
+        updatedAt: '2025-02-20',
+        estimatedHarvestDate: '2025-03-10',
         image: '/assets/img/plants/apio.png'
+
     },
     {
         id: 7,
         slot: 7,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2025-01-10',
-        estimatedHarvestDate: '2025-02-20',
+        createdAt: '2025-01-10',
+        updatedAt: '2025-02-20',
+        estimatedHarvestDate: '2025-03-10',
         image: '/assets/img/plants/apio.png'
+
     },
     {
         id: 8,
         slot: 8,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2025-01-10',
-        estimatedHarvestDate: '2025-02-20',
+        createdAt: '2025-01-10',
+        updatedAt: '2025-02-20',
+        estimatedHarvestDate: '2025-03-10',
         image: '/assets/img/plants/apio.png'
     },
     {
         id: 9,
+
         slot: 9,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2025-01-10',
-        estimatedHarvestDate: '2025-02-20',
+        createdAt: '2025-01-10',
+        updatedAt: '2025-02-20',
+        estimatedHarvestDate: '2025-03-10',
         image: '/assets/img/plants/apio.png'
+
     },
     {
         id: 10,
         slot: 10,
         category: 'Cilantro',
         status: 'creciendo',
-        plantingDate: '2025-01-10',
-        estimatedHarvestDate: '2025-02-20',
+        createdAt: '2025-01-10',
+        updatedAt: '2025-02-20',
+        estimatedHarvestDate: '2025-03-10',
         image: '/assets/img/plants/cilantro.png'
     }
   ]
+
 
   const plantasActivas = plantas.filter(p => p.status !== 'cosechado')
   const plantasCosechadas = plantas.filter(p => p.status === 'cosechado')
@@ -329,7 +341,7 @@ const ControlCultivos = () => {
                   <img src={planta.image} alt={planta.category} />
                   <div className="info-cosechada">
                     <h3>{planta.category}</h3>
-                    <p>Fecha de cosecha: {planta.estimatedHarvestDate}</p>
+                    <p>Fecha de cosecha: {planta.updatedAt}</p>
                   </div>
                 </div>
               ))}
@@ -356,8 +368,10 @@ const ControlCultivos = () => {
                   {capitalizarPrimeraLetra(plantaSeleccionada.status)}
                 </span>
               </p>
-              <p><strong>Fecha de siembra: </strong>{plantaSeleccionada.plantingDate}</p>
-              <p><strong>Fecha estimada de cosecha: </strong>{plantaSeleccionada.estimatedHarvestDate}</p>
+              <p><strong>Fecha de siembra: </strong>{plantaSeleccionada.createdAt}</p>
+              {plantaSeleccionada.status === 'creciendo' && (
+                <p><strong>Fecha estimada de cosecha: </strong>{plantaSeleccionada.estimatedHarvestDate}</p>
+              )}
             </div>
             {plantaSeleccionada.status === 'creciendo' && (
               <div className="modal-actions">
