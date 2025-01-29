@@ -17,23 +17,25 @@ const SellerProfile = () => {
       nombre: 'Lechuga Fresca',
       descripcion: 'Lechuga orgánica cultivada en hidroponía',
       precio: 25.00,
-      imagen: '/assets/img/plants/lettuce.png',
+      imagen: '/assets/img/products/lechuga.jpg',
       disponible: true
+
     },
     {
         id: 2,
         nombre: 'Rúcula Fresca',
         descripcion: 'Rúcula orgánica cultivada en hidroponía',
         precio: 30.00,
-        imagen: '/assets/img/plants/rucula.png',
+        imagen: '/assets/img/products/rucula.jpg',
         disponible: true
+
     },
     {
         id: 3,
         nombre: 'Cilantro Fresco',
         descripcion: 'Cilantro orgánico cultivado en hidroponía',
         precio: 20.00,
-        imagen: '/assets/img/plants/cilantro.png',
+        imagen: '/assets/img/products/cilantro.jpg',
         disponible: true
     },
     {
@@ -41,15 +43,15 @@ const SellerProfile = () => {
         nombre: 'Albahaca Fresca',
         descripcion: 'Albahaca orgánica cultivada en hidroponía',
         precio: 25.00,
-        imagen: '/assets/img/plants/albahaca.png',
+        imagen: '/assets/img/products/albahaca.jpg',
         disponible: true
     }
+
 
   ])
 
   return (
     <div className="seller-profile">
-      {/* Header con información del vendedor */}
       <div className="seller-header">
         <div className="seller-info">
           <img 
@@ -59,7 +61,7 @@ const SellerProfile = () => {
           />
           <div className="seller-details">
             <h1>HIBO Huertos, Insumos e Hidroponia</h1>
-            <p className="seller-slogan">Producimos y vendemos hortalizas Promovemos el autocultivo, damos cursos, talleres y vendemos insumos</p>
+            <p className="seller-slogan">Producimos y vendemos hortalizas, promovemos el autocultivo, damos cursos, talleres y vendemos insumos</p>
           </div>
         </div>
         <div className="seller-contact">
@@ -70,9 +72,8 @@ const SellerProfile = () => {
         </div>
       </div>
 
-      {/* Sección principal */}
       <div className="main-content">
-        {/* Productos */}
+
         <section className="products-section">
           <h2>Nuestros Productos</h2>
           <div className="products-grid">
@@ -90,7 +91,6 @@ const SellerProfile = () => {
           </div>
         </section>
 
-        {/* Sección "Por qué nosotros" */}
         <section className="why-us">
           <h2>¿Por qué elegir nuestros productos?</h2>
           <div className="benefits-grid">
@@ -112,7 +112,6 @@ const SellerProfile = () => {
           </div>
         </section>
 
-        {/* Consejos y Tips */}
         <section className="tips-section">
           <h2>Consejos de Cultivo</h2>
           <div className="tips-grid">
