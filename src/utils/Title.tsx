@@ -5,6 +5,7 @@ interface TitleProps {
 }
 
 const Title: React.FC<TitleProps> = ({ subtitle }) => {
+  
   useEffect(() => {
     document.title = `${subtitle} | Hydrop`;
   }, [subtitle]);
