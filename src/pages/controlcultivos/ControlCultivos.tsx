@@ -8,11 +8,12 @@ interface PlantaBase {
   status: 'creciendo' | 'cosechado' | 'marchito'
   plantingDate: string
   estimatedHarvestDate: string
+  witheredDate?: string
   image: string
 }
 
 interface PlantaActiva extends PlantaBase {
-  status: 'creciendo' | 'marchito'
+  status: 'creciendo'
   slot: number
 }
 
@@ -20,7 +21,13 @@ interface PlantaCosechada extends PlantaBase {
   status: 'cosechado'
 }
 
-type Planta = PlantaActiva | PlantaCosechada
+interface PlantaMarchita extends PlantaBase {
+  status: 'marchito'
+  witheredDate: string
+  slot: number
+}
+
+type Planta = PlantaActiva | PlantaCosechada | PlantaMarchita
 
 const CATEGORIAS_PLANTAS = [
   { valor: 'Lechuga', imagen: '/assets/img/plants/lettuce.png' },
@@ -50,16 +57,16 @@ const ControlCultivos = () => {
       slot: 1,
       category: 'Lechuga',
       status: 'creciendo',
-      plantingDate: '2024-03-15',
-      estimatedHarvestDate: '2024-04-15',
+      plantingDate: '2025-03-15',
+      estimatedHarvestDate: '2025-04-15',
       image: '/assets/img/plants/lettuce.png'
     },
     {
       id: 2,
       category: 'Rúcula',
       status: 'cosechado',
-      plantingDate: '2024-02-01',
-      estimatedHarvestDate: '2024-03-15',
+      plantingDate: '2025-02-01',
+      estimatedHarvestDate: '2025-03-15',
       image: '/assets/img/plants/rucula.png'
     },
     {
@@ -67,8 +74,9 @@ const ControlCultivos = () => {
       slot: 3,
       category: 'Cilantro',
       status: 'marchito',
-      plantingDate: '2024-01-10',
-      estimatedHarvestDate: '2024-02-20',
+      plantingDate: '2025-01-15',
+      estimatedHarvestDate: '2025-02-15',
+      witheredDate: '2025-02-01',
       image: '/assets/img/plants/cilantro.png'
     },
     {
@@ -76,8 +84,8 @@ const ControlCultivos = () => {
       slot: 4,
       category: 'Apio',
       status: 'creciendo',
-      plantingDate: '2024-01-10',
-      estimatedHarvestDate: '2024-02-20',
+      plantingDate: '2025-01-10',
+      estimatedHarvestDate: '2025-02-20',
       image: '/assets/img/plants/apio.png'
     },
     {
@@ -85,8 +93,8 @@ const ControlCultivos = () => {
       slot: 5,
       category: 'Albahaca',
       status: 'creciendo',
-      plantingDate: '2024-01-10',
-      estimatedHarvestDate: '2024-02-20',
+      plantingDate: '2025-01-10',
+      estimatedHarvestDate: '2025-02-20',
       image: '/assets/img/plants/albahaca.png'
     },
     {
@@ -94,8 +102,8 @@ const ControlCultivos = () => {
         slot: 6,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2024-01-10',
-        estimatedHarvestDate: '2024-02-20',
+        plantingDate: '2025-01-10',
+        estimatedHarvestDate: '2025-02-20',
         image: '/assets/img/plants/apio.png'
     },
     {
@@ -103,8 +111,8 @@ const ControlCultivos = () => {
         slot: 7,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2024-01-10',
-        estimatedHarvestDate: '2024-02-20',
+        plantingDate: '2025-01-10',
+        estimatedHarvestDate: '2025-02-20',
         image: '/assets/img/plants/apio.png'
     },
     {
@@ -112,8 +120,8 @@ const ControlCultivos = () => {
         slot: 8,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2024-01-10',
-        estimatedHarvestDate: '2024-02-20',
+        plantingDate: '2025-01-10',
+        estimatedHarvestDate: '2025-02-20',
         image: '/assets/img/plants/apio.png'
     },
     {
@@ -121,8 +129,8 @@ const ControlCultivos = () => {
         slot: 9,
         category: 'Apio',
         status: 'creciendo',
-        plantingDate: '2024-01-10',
-        estimatedHarvestDate: '2024-02-20',
+        plantingDate: '2025-01-10',
+        estimatedHarvestDate: '2025-02-20',
         image: '/assets/img/plants/apio.png'
     },
     {
@@ -130,8 +138,8 @@ const ControlCultivos = () => {
         slot: 10,
         category: 'Cilantro',
         status: 'creciendo',
-        plantingDate: '2024-01-10',
-        estimatedHarvestDate: '2024-02-20',
+        plantingDate: '2025-01-10',
+        estimatedHarvestDate: '2025-02-20',
         image: '/assets/img/plants/cilantro.png'
     }
   ]
@@ -190,7 +198,7 @@ const ControlCultivos = () => {
           className="planta-card"
           onClick={() => abrirDetalles(planta)}
         >
-          <div className="slot-number">Espacio {slotNumber}</div>
+          <div className="slot-number">{slotNumber}</div>
           <img 
             src={planta.image} 
             alt={planta.category}
@@ -219,7 +227,7 @@ const ControlCultivos = () => {
           setMostrarFormulario(true);
         }}
       >
-        <div className="slot-number">Espacio {slotNumber}</div>
+        <div className="slot-number">{slotNumber}</div>
         <div className="slot-placeholder">+</div>
       </div>
     );
