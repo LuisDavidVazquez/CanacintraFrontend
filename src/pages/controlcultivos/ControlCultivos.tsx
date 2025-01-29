@@ -35,6 +35,7 @@ const ControlCultivos = () => {
   const [errorImagen, setErrorImagen] = useState<{[key: number]: boolean}>({})
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
   const [mostrarCosechadas, setMostrarCosechadas] = useState(false)
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState<'cosecha' | 'eliminacion' | null>(null)
   const [nuevaPlanta, setNuevaPlanta] = useState({
     categoria: '',
     slot: 1
@@ -222,6 +223,33 @@ const ControlCultivos = () => {
     );
   };
 
+  const iniciarCosecha = () => {
+    setMostrarConfirmacion('cosecha')
+  }
+
+  const iniciarEliminacion = () => {
+    setMostrarConfirmacion('eliminacion')
+  }
+
+  const confirmarAccion = () => {
+    if (!plantaSeleccionada) return
+
+    if (mostrarConfirmacion === 'cosecha') {
+      // Aquí implementarías la lógica para marcar como cosechado en tu backend
+      console.log('Marcando como cosechado:', plantaSeleccionada.id)
+    } else if (mostrarConfirmacion === 'eliminacion') {
+      // Aquí implementarías la lógica para eliminar en tu backend
+      console.log('Eliminando planta:', plantaSeleccionada.id)
+    }
+
+    setMostrarConfirmacion(null)
+    setPlantaSeleccionada(null)
+  }
+
+  const cancelarAccion = () => {
+    setMostrarConfirmacion(null)
+  }
+
   return (
     <div className="control-cultivos">
       <div className="controles">
@@ -314,6 +342,52 @@ const ControlCultivos = () => {
               </p>
               <p><strong>Fecha de siembra: </strong>{plantaSeleccionada.plantingDate}</p>
               <p><strong>Fecha estimada de cosecha: </strong>{plantaSeleccionada.estimatedHarvestDate}</p>
+            </div>
+            {plantaSeleccionada.status === 'creciendo' && (
+              <div className="modal-actions">
+                <button 
+                  className="boton-eliminar"
+                  onClick={iniciarEliminacion}
+                >
+                  Eliminar Planta
+                </button>
+                <button 
+                  className="boton-cosechar"
+                  onClick={iniciarCosecha}
+                >
+                  Marcar como Cosechado
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Modal de confirmación */}
+      {mostrarConfirmacion && (
+        <div className="modal-overlay" onClick={cancelarAccion}>
+          <div className="modal-content modal-confirmacion" onClick={e => e.stopPropagation()}>
+            <h2>
+              {mostrarConfirmacion === 'cosecha' ? 'Confirmar Cosecha' : 'Confirmar Eliminación'}
+            </h2>
+            <p>
+              {mostrarConfirmacion === 'cosecha' 
+                ? '¿Estás seguro de que deseas marcar esta planta como cosechada?' 
+                : '¿Estás seguro de que deseas eliminar esta planta?'}
+            </p>
+            <div className="modal-actions-confirmacion">
+              <button 
+                className="boton-cancelar"
+                onClick={cancelarAccion}
+              >
+                Cancelar
+              </button>
+              <button 
+                className={`boton-confirmar ${mostrarConfirmacion === 'eliminacion' ? 'boton-confirmar-eliminar' : ''}`}
+                onClick={confirmarAccion}
+              >
+                Confirmar
+              </button>
             </div>
           </div>
         </div>

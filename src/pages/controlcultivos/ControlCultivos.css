@@ -25,10 +25,6 @@
     flex-direction: column;
     align-items: center;
     aspect-ratio: 1;
-    width: 100%;
-    min-width: 150px;
-    max-width: 300px;
-    margin: 0 auto;
 }
 
 .planta-card:hover {
@@ -36,10 +32,8 @@
 }
 
 .planta-card img {
-    width: 100%;
-    height: auto;
-    max-width: 150px;
-    max-height: 150px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -48,7 +42,6 @@
 .planta-card h3 {
     margin: 10px 0;
     color: #333;
-    font-size: 1.2em;
 }
 
 .estado-badge {
@@ -78,8 +71,6 @@
     width: 90%;
     max-width: 500px;
     position: relative;
-    width: 95%;
-    padding: 15px;
 }
 
 .cerrar-modal {
@@ -234,14 +225,12 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    width: 100%;
 }
 
 .fila-slots {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    width: 100%;
 }
 
 .slot-vacio {
@@ -258,10 +247,6 @@
     justify-content: center;
     aspect-ratio: 1;
     border: 2px dashed #ccc;
-    width: 100%;
-    min-width: 150px;
-    max-width: 300px;
-    margin: 0 auto;
 }
 
 .slot-vacio:hover {
@@ -274,55 +259,180 @@
     color: #ccc;
 }
 
-@media (max-width: 768px) {
-    .torre-hidroponica {
-        padding: 10px;
-    }
-
-    .fila-slots {
-        gap: 10px;
-    }
-
-    .planta-card, .slot-vacio {
-        min-width: 100px;
-    }
-
-    .planta-card img {
-        max-width: 100px;
-        max-height: 100px;
-    }
-
-    .modal-content {
-        width: 95%;
-        padding: 15px;
-    }
-
-    .modal-header {
-        flex-direction: column;
-        text-align: center;
-    }
+.slot-placeholder {
+    font-size: 2em;
+    color: #ccc;
 }
 
-@media (max-width: 480px) {
-    .controles {
-        flex-direction: column;
-        padding: 10px;
-    }
+.modal-actions {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
 
-    .boton-agregar,
-    .boton-cosechadas {
-        width: 100%;
-    }
+.boton-cosechar {
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
 
-    .planta-card h3 {
-        font-size: 0.9em;
-    }
+.boton-cosechar:hover {
+    background-color: #ffb300;
+}
 
-    .estado-badge {
-        font-size: 0.8em;
-    }
+.modal-confirmacion {
+    max-width: 400px;
+    text-align: center;
+}
 
-    .slot-number {
-        font-size: 0.8em;
-    }
+.modal-confirmacion h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.modal-confirmacion p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.modal-actions-confirmacion {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.boton-cancelar {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.boton-cancelar:hover {
+    background-color: #5a6268;
+}
+
+.boton-confirmar {
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.boton-confirmar:hover {
+    background-color: #ffb300;
+}
+
+.boton-eliminar {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.boton-eliminar:hover {
+    background-color: #c82333;
+}
+
+.boton-confirmar-eliminar {
+    background-color: #dc3545;
+    color: white;
+}
+
+.boton-confirmar-eliminar:hover {
+    background-color: #c82333;
+}
+
+/* Media queries para diferentes tamaños de pantalla */
+@media screen and (max-width: 1024px) {
+  .fila-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: 450px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .control-cultivos {
+    padding: 10px;
+  }
+
+  .controles {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .modal-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .modal-header img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .planta-card img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .fila-slots {
+    grid-template-columns: 1fr;
+  }
+
+  .planta-card {
+    aspect-ratio: auto;
+    min-height: 250px;
+  }
+
+  .slot-vacio {
+    aspect-ratio: auto;
+    min-height: 250px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+
+  .planta-cosechada {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .planta-cosechada img {
+    width: 80px;
+    height: 80px;
+  }
 }
