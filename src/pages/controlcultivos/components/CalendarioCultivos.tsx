@@ -125,6 +125,33 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
     }
   }
 
+  const agruparEventosPorMes = () => {
+    const eventosAgrupados: { [key: string]: Evento[] } = {}
+    
+    eventos.forEach(evento => {
+      const fecha = new Date(evento.fecha)
+      const mesKey = fecha.toLocaleDateString('es-ES', { 
+        year: 'numeric',
+        month: 'long'
+      })
+      
+      if (!eventosAgrupados[mesKey]) {
+        eventosAgrupados[mesKey] = []
+      }
+      eventosAgrupados[mesKey].push(evento)
+    })
+
+    // Ordenar los meses cronológicamente
+    return Object.entries(eventosAgrupados)
+      .sort(([mesA], [mesB]) => {
+        const [mesADate] = mesA.split(' de ')
+        const [mesBDate] = mesB.split(' de ')
+        const fechaA = new Date(mesA)
+        const fechaB = new Date(mesB)
+        return fechaB.getTime() - fechaA.getTime()
+      })
+  }
+
   const renderizarCalendario = () => {
     const diasEnMes = obtenerDiasEnMes(mesActual)
     const primerDia = obtenerPrimerDiaSemana(mesActual)
@@ -234,20 +261,33 @@ const CalendarioCultivos = ({ plantas, onClose }: CalendarioCultivosProps) => {
           </div>
         ) : (
           <div className="lista-vista">
-            {eventos.map(evento => (
-              <div 
-                key={evento.id} 
-                className="evento-lista"
-                style={{ borderLeftColor: obtenerColor(evento.tipo) }}
-              >
-                <span className="evento-icono">{obtenerIcono(evento.tipo)}</span>
-                <div className="evento-info">
-                  <span className="evento-fecha">{formatearFecha(evento.fecha)}</span>
-                  <span className="evento-planta">{evento.planta}</span>
-                  <span className="evento-tipo">
-                    {evento.tipo === 'siembra' ? 'Sembrado' :
-                     evento.tipo === 'cosecha' ? 'Cosechado' : 'Marchitado'}
-                  </span>
+            {agruparEventosPorMes().map(([mes, eventosDelMes]) => (
+              <div key={mes} className="mes-grupo">
+                <h3 className="mes-titulo">{mes}</h3>
+                <div className="eventos-mes">
+                  {eventosDelMes.map(evento => (
+                    <div 
+                      key={evento.id} 
+                      className="evento-lista"
+                      style={{ borderLeftColor: obtenerColor(evento.tipo) }}
+                      onClick={() => mostrarDetallesEvento(evento)}
+                    >
+                      <span className="evento-icono">{obtenerIcono(evento.tipo)}</span>
+                      <div className="evento-info">
+                        <span className="evento-fecha">
+                          {new Date(evento.fecha).toLocaleDateString('es-ES', {
+                            day: 'numeric',
+                            month: 'long'
+                          })}
+                        </span>
+                        <span className="evento-planta">{evento.planta}</span>
+                        <span className="evento-tipo">
+                          {evento.tipo === 'siembra' ? 'Sembrado' :
+                           evento.tipo === 'cosecha' ? 'Cosechado' : 'Marchitado'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
