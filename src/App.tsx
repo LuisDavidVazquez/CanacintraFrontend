@@ -8,13 +8,14 @@ import Stat from './pages/Stat/Stat';
 import Landing from './pages/landing/Landing';
 import Setting from './pages/settings/Setting';
 import ControlCultivos from './pages/controlcultivos/ControlCultivos';
-
+import SellerProfile from './pages/sellerprofile/SellerProfile';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/sellerprofile" element={<SellerProfile />} />
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/stations" element={<Station />} />
@@ -25,6 +26,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+
   )
 }
 
