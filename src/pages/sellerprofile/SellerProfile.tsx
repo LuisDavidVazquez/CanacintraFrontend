@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './SellerProfile.css'
+import Title from '../../utils/Title'
 
 interface Producto {
   id: number
@@ -44,7 +45,7 @@ const SellerProfile = () => {
         descripcion: 'Albahaca orgánica cultivada en hidroponía',
         precio: 25.00,
         imagen: '/assets/img/products/albahaca.jpg',
-        disponible: true
+        disponible: false
     }
 
 
@@ -52,9 +53,11 @@ const SellerProfile = () => {
 
   return (
     <div className="seller-profile">
+      <Title subtitle="HIBO"/>
       <div className="seller-header">
         <div className="seller-info">
           <img 
+
             src="/assets/img/HIBO.jpg" 
             alt="Logo de la tienda" 
             className="seller-logo"
