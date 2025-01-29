@@ -6,8 +6,8 @@ import Station from './pages/station/Station';
 import Plant from './pages/plant/Plant';
 import Stat from './pages/Stat/Stat';
 import Landing from './pages/landing/Landing';
-import Stat from './pages/stat/Stat';
 import Setting from './pages/settings/Setting';
+import ControlCultivos from './pages/controlcultivos/ControlCultivos';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <Route path="/plants" element={<Plant />} />
           <Route path="/stats" element={<Stat />} />
           <Route path="/settings" element={<Setting />} />
+          <Route path="/stations/1" element={<ControlCultivos />} />
         </Route>
       </Routes>
     </BrowserRouter>
