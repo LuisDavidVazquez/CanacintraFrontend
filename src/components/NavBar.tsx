@@ -23,7 +23,7 @@ function NavBar({ isActive, isMenuOpen, onMenuToggle }: NavBarProps) {
             </header>
             <nav>
                 <ul>
-                    <NavLink to="/home" className={({isActive}) => isActive ? 'active' : ''}>
+                    <NavLink  to="/home" className={({isActive}) => isActive ? 'active' : ''}>
                         <img src="assets/svg/navbar/home.svg" alt="" /> 
                         <p>Inicio</p>
                     </NavLink>
