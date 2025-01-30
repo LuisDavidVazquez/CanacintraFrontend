@@ -1,8 +1,6 @@
 import './Login.css'
 import Title from '../../utils/Title'
 import SignIn from './components/SignIn'
-import SignUp from './components/SignUp'
-
 
 function Login() {
 
