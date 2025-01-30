@@ -143,7 +143,7 @@ function Stat() {
           <div className="sensor-chart-container">
             <Line data={chartData.ec} options={chartOptions} />
           </div>
-        </div><br /><br />
+        </div><br /><br /><br />
       </div>
     </div>
   )
