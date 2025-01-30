@@ -7,7 +7,7 @@
 
 .navbar {
     height: 100%;
-    background-color: transparent;
+    background-color: #ffffff;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
     display: flex;
     z-index: 1000;
@@ -32,6 +32,8 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    overflow: auto;
+    scrollbar-width: none;
 }
 
 .navbar-section a {
@@ -92,10 +94,15 @@
 @media  (max-width: 800px) {
 
     .navbar {
-        height: 100%;
+        height: 100vh;
         width: 100%;
         background-color: rgba(0, 0, 0, 0.274);
         position: fixed;
+    }
+
+    .navbar-section {
+        overflow: auto;
+        scrollbar-width: none;
     }
 
     .navbar-exit-deactivate {
@@ -104,7 +111,6 @@
 
     .navbar-exit-activate {
         display: block;
-        width: 100%;
         background-color: rgba(0, 0, 0, 0);
         border: none;
         outline: none;
