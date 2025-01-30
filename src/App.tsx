@@ -4,7 +4,7 @@ import Login from './pages/login/Login';
 import Home from './pages/home/Home';
 import Station from './pages/station/Station';
 import Plant from './pages/plant/Plant';
-import Stat from './pages/stat/Stat';
+import Stat from './pages/statv1/Stat';
 import Landing from './pages/landing/Landing';
 import Setting from './pages/settings/Setting';
 import ControlCultivos from './pages/controlcultivos/ControlCultivos';
