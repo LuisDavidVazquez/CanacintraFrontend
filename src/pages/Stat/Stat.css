@@ -1,6 +1,139 @@
-.stat {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background: #f0f0f0;
+.sensor-stats-container {
+  padding: 1rem;
+  background: #f0f0f0;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.sensor-stats-title {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px 25px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #00acc1;
+  margin-bottom: 2rem;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+}
+
+.sensor-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 600px), 1fr));
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.sensor-stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 3px solid rgba(0, 172, 193, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 350px;
+  box-sizing: border-box;
+}
+
+.sensor-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border: 3px solid rgba(0, 172, 193, 0.3);
+}
+
+.sensor-stat-card-title {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #00acc1;
+  margin-bottom: 1rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sensor-chart-container {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-height: 250px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Pantallas grandes */
+@media (min-width: 1400px) {
+  .sensor-stats-container {
+    padding: 2rem;
+  }
+
+  .sensor-stats-grid {
+    gap: 2rem;
+    padding: 0;
+  }
+
+  .sensor-stat-card {
+    padding: 1.5rem;
+    min-height: 400px;
+  }
+
+  .sensor-chart-container {
+    min-height: 300px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .sensor-stats-grid {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .sensor-stat-card {
+    min-height: 300px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+  .sensor-stats-container {
+    padding: 0.5rem;
+  }
+
+  .sensor-stats-grid {
+    gap: 0.8rem;
+  }
+
+  .sensor-stat-card {
+    padding: 0.8rem;
+    min-height: 250px;
+  }
+
+  .sensor-chart-container {
+    padding: 0.5rem;
+    min-height: 200px;
+  }
+
+  .sensor-stat-card-title {
+    padding: 8px 12px;
+    margin-bottom: 0.8rem;
+  }
+}
+
+/* Ajustes para evitar desbordamiento en Chart.js */
+.sensor-chart-container canvas {
+  max-width: 100% !important;
+  height: auto !important;
 }
