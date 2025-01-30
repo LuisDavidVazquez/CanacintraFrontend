@@ -27,6 +27,8 @@ const Layout = () => {
         return 'Estadísticas'
       case '/settings':
         return 'Configuración'
+      case '/sensors':
+        return 'Sensores'
       default:
         return ''
     }
@@ -38,36 +40,44 @@ const Layout = () => {
   }
 
   const getHeader = (): HeaderProps => {
-    switch (location.pathname) {
+    // Obtener la ruta principal (primera parte del path)
+    const mainPath = '/' + location.pathname.split('/')[1];
+    
+    switch (mainPath) {
       case '/home':
         return {
           title: 'Inicio',
-          image: 'assets/svg/navbar/home.svg'
+          image: '/assets/svg/navbar/home.svg'
         }
       case '/stations':
         return {
           title: 'Estaciones',
-          image: 'assets/svg/navbar/hydroponic.svg'
+          image: '/assets/svg/navbar/hydroponic.svg'
         }
       case '/plants':
         return {
           title: 'Plantas',
-          image: 'assets/svg/navbar/plants.svg'
+          image: '/assets/svg/navbar/plants.svg'
         }
       case '/stats':
         return {
           title: 'Estadísticas',
-          image: 'assets/svg/navbar/stats.svg'
+          image: '/assets/svg/navbar/stats.svg'
         }
       case '/settings':
         return {
           title: 'Ajustes',
-          image: 'assets/svg/navbar/settings.svg'
+          image: '/assets/svg/navbar/settings.svg'
+        }
+      case '/sensors':
+        return {
+          title: 'Sensores',
+          image: '/assets/svg/header/sensors.svg'
         }
       default:
         return {
           title: '',
-          image: 'assets/svg/navbar/home.svg'
+          image: '/assets/svg/navbar/home.svg'
         }
     }
   }

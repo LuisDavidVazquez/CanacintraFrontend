@@ -1,0 +1,73 @@
+.stationDetail {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.stationDetail-plants {
+  min-width: 300px;
+  margin: 3%;
+  padding: 3%;
+  text-decoration: none;
+  color: black;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: space-between;
+  flex: 1;
+  background-image: url('../../assets/img/station/hydroponic-gardening.png');
+  background-blend-mode: overlay;
+  background-color: rgba(255, 255, 255, 0.475);
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.2s;
+  border-radius: 10px;
+}
+
+.stationDetail-sensors{
+  min-width: 300px;
+  margin: 3%;
+  padding: 3%;
+  text-decoration: none;
+  color: black;
+  background-color: #ffffff;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: space-between;
+  flex: 1;
+  background-image: url('../../assets/img/station/motion-sensor.png');
+  background-blend-mode: overlay;
+  background-color: rgba(255, 255, 255, 0.475);
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.2s;
+  border-radius: 10px;
+}
+
+.stationDetail-plants h1, .stationDetail-sensors h1 {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stationDetail a:hover{
+  transform: scale(1.02);
+  transition: 0.2s;
+  background-color: rgba(255, 255, 255, 0);
+  border: 5px solid rgba(0, 0, 0, 0.1);
+}
+
+.stationDetail a:hover h1 {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+

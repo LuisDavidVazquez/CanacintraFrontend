@@ -1,9 +1,12 @@
 import './Home.css'
 
 function Home() {
+
   return (
-    <div className="home">
-      {/* Contenido específico de Home */}
+    <div style={{ overflowX: 'scroll', scrollbarWidth: 'none' }}>
+        <div className="home">
+        
+      </div>
     </div>
   )
 }
