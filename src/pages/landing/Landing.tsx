@@ -76,7 +76,7 @@ function Landing() {
               <img src="assets/svg/custom.svg" alt="Customization icon" className="service-icon" />
               <div className="service-cta">
                 <p>Conoce la tienda de un socio de Hydrop:</p>
-                <a href="/sellerprofile" className="example-link">
+                <a href="/sellers/hibo" className="example-link">
                   Ver Tienda HIBO →
                 </a>
               </div>

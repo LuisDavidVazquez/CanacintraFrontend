@@ -9,19 +9,21 @@ import Landing from './pages/landing/Landing';
 import Setting from './pages/settings/Setting';
 import ControlCultivos from './pages/controlcultivos/ControlCultivos';
 import SellerProfile from './pages/sellerprofile/SellerProfile';
+import User from './pages/user/User';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/sellerprofile" element={<SellerProfile />} />
+        <Route path="/sellers/hibo" element={<SellerProfile />} />
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/stations" element={<Station />} />
           <Route path="/plants" element={<Plant />} />
           <Route path="/stats" element={<Stat />} />
           <Route path="/settings" element={<Setting />} />
+          <Route path="/user/juan" element={<User/>}></Route>
           <Route path="/stations/1" element={<ControlCultivos />} />
         </Route>
       </Routes>
