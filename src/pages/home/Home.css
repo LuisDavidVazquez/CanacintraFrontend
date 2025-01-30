@@ -1,10 +1,140 @@
 .home {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
     background: #f0f0f0;
+    overflow-y: auto;
 }
 
+.stats-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 2rem;
+}
 
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
 
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
 
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.subcategory-title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-size: 1.2rem;
+}
+
+.category-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.category-card {
+    text-align: center;
+    padding: 1rem;
+}
+
+.category-card .stat-info h3 {
+    font-size: 1rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.category-card .stat-value {
+    font-size: 1.8rem;
+    color: #4CAF50;
+}
+
+@media (max-width: 768px) {
+    .home {
+        padding: 1rem;
+    }
+    
+    .category-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .category-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.system-selector {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 1rem;
+    color: #2c3e50;
+    cursor: pointer;
+}
+
+.system-selector:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.welcome-section {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section h1 {
+    color: #00acc1;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-section p {
+    color: #666;
+    font-size: 1.1rem;
+}

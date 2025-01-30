@@ -32,8 +32,7 @@ function Landing() {
         </div>
         <div className='nav-links'>
           <a href="/login">Iniciar Sesión</a>
-          <a href="/login" className="nav-button">Registrarse</a>
-          <a href="#contacto">Contacto</a>
+          <a href="#footer">Contacto</a>
           <a href="#nosotros">Quiénes Somos</a>
         </div>
       </nav>
@@ -75,12 +74,18 @@ function Landing() {
               <h3>Personalización</h3>
               <p>Desarrollamos interfaces personalizadas según tus necesidades específicas, adaptando el sistema a tu modelo de negocio hidropónico.</p>
               <img src="assets/svg/custom.svg" alt="Customization icon" className="service-icon" />
+              <div className="service-cta">
+                <p>Conoce la tienda de un socio de Hydrop:</p>
+                <a href="/sellers/hibo" className="example-link">
+                  Ver Tienda HIBO →
+                </a>
+              </div>
             </div>
           </div>
         </section>
 
         <section className='info-box'>
-          <h2>Tecnología Avanzada</h2>
+          <h2>Características Principales</h2>
           <div className='features-grid'>
             <div className='feature-item'>
               <h3>Sensores IoT de alta precisión</h3>
@@ -110,7 +115,7 @@ function Landing() {
             </div>
             <div className='benefit'>
               <h3>Mayor Productividad</h3>
-              <p>Incrementa el rendimiento de tus cultivos hasta en un 30% con nuestro sistema optimizado.</p>
+              <p>Incrementa el rendimiento de tus cultivos con nuestro sistema optimizado.</p>
             </div>
             <div className='benefit'>
               <h3>Control Total</h3>
@@ -118,9 +123,28 @@ function Landing() {
             </div>
           </div>
         </section>        
+
+        <section className='info-box' id="nosotros">
+          <h2>Quiénes Somos</h2>
+          <div className='about-container'>
+            <div className='about-content'>
+              <p>En Hydrop, somos un equipo apasionado por la innovación agrícola y la sostenibilidad. Nacimos con la visión de transformar la agricultura tradicional mediante soluciones tecnológicas avanzadas y accesibles.</p>
+              <div className='about-values'>
+                <div className='value-item'>
+                  <h3>Nuestra Misión</h3>
+                  <p>Democratizar el acceso a la agricultura hidropónica mediante tecnología inteligente y sostenible, permitiendo desde personas que quieren cultivar en su casa hasta empresas optimizar sus cultivos de manera eficiente.</p>
+                </div>
+                <div className='value-item'>
+                  <h3>Nuestra Visión</h3>
+                  <p>Ser líderes en la transformación digital de la agricultura hidropónica en México, impulsando una producción de alimentos más sostenible y eficiente.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <footer className='landing-footer'>
+      <footer className='landing-footer' id="footer">
         <div className='footer-content'>
           <div className='footer-section'>
             <div className='footer-brand'>

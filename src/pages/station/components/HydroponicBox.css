@@ -5,33 +5,17 @@
     margin: 1% 5%;
     padding: 4%;
     background-color: #ffffff;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
     transition: 0.2s;
     border: none;
     cursor: pointer;
     background-image: url('../../assets/img/home/background-hydroponic.png');
     background-blend-mode: overlay;
-    background-color: rgba(255, 255, 255, 0.911);
+    background-color: rgba(255, 255, 255, 0.475);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-}
-
-
-.hydroponicBox h1 {
-    font-size: 4vh;
-}
-
-.hydroponicBox h2 {
-    font-size: 2.5vh;
-}
-
-
-
-.hydroponicBox:hover {
-    transform: scale(1.02);
-    background-color: #cefdffa6;
 }
 
 .hydroponicBox-description {
@@ -40,6 +24,38 @@
     text-align: left;
 }
 
+.hydroponicBox h1 {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 4vh;
+    color: #00acc1;
+}
+
+.hydroponicBox h2 {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 2.5vh;
+    margin-top: 1rem;
+    color: #666;
+}
+
+.hydroponicBox:hover {
+    transform: scale(1.02);
+    background-color: rgba(255, 255, 255, 0);
+    border: 5px solid rgba(0, 0, 0, 0.1);
+}
+
+.hydroponicBox:hover h1,
+.hydroponicBox:hover h2 {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 
 .hydroponicBox img {
     width: 15vh;

@@ -8,7 +8,7 @@ interface SensorBoxProps {
 }
 
 function SensorBox({ title, value, unit, imageUrl }: SensorBoxProps) {
-  // Obtener parámetros de la URL
+ 
 
   return (
     <div className='sensorBox'>

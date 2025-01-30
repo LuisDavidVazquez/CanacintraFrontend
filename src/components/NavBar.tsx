@@ -9,7 +9,6 @@ interface NavBarProps {
 
 function NavBar({ isActive, isMenuOpen, onMenuToggle }: NavBarProps) {
 
-
     const logout = () => {
         localStorage.removeItem('token');
     }
@@ -55,9 +54,9 @@ function NavBar({ isActive, isMenuOpen, onMenuToggle }: NavBarProps) {
             </nav>
             <footer>
                 <ul>
-                    <NavLink to="/settings" className={({isActive}) => isActive ? 'active' : ''}>
+                    <NavLink to="/user" className={({isActive}) => isActive ? 'active' : ''}>
                         <img src="/assets/svg/navbar/settings.svg" alt="" /> 
-                        <p>Ajustes</p>
+                        <p>Perfil</p>
                     </NavLink>  
 
                 </ul>

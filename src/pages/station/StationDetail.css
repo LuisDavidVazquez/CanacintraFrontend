@@ -25,6 +25,7 @@
   background-position: center;
   transition: 0.2s;
   border-radius: 10px;
+   border: 5px solid #00abc13b;
 }
 
 .stationDetail-sensors{
@@ -35,7 +36,6 @@
   color: black;
   background-color: #ffffff;
   display: flex;
-
   flex-direction: column;
   justify-content: space-between;
   align-items: space-between;
@@ -47,6 +47,7 @@
   background-position: center;
   transition: 0.2s;
   border-radius: 10px;
+  border: 5px solid #00abc13b;
 }
 
 .stationDetail-plants h1, .stationDetail-sensors h1 {
@@ -55,13 +56,14 @@
   border-radius: 5px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #00acc1;
 }
 
 .stationDetail a:hover{
   transform: scale(1.02);
   transition: 0.2s;
   background-color: rgba(255, 255, 255, 0);
-  border: 5px solid rgba(0, 0, 0, 0.1);
+  border: 5px solid #00acc1;
 }
 
 .stationDetail a:hover h1 {

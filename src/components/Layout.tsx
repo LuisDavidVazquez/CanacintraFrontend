@@ -26,7 +26,7 @@ const Layout = () => {
       case '/stats':
         return 'Estadísticas'
       case '/settings':
-        return 'Configuración'
+        return 'Perfil'
       case '/sensors':
         return 'Sensores'
       default:
@@ -64,9 +64,9 @@ const Layout = () => {
           title: 'Estadísticas',
           image: '/assets/svg/navbar/stats.svg'
         }
-      case '/settings':
+      case '/user':
         return {
-          title: 'Ajustes',
+          title: 'Perfil',
           image: '/assets/svg/navbar/settings.svg'
         }
       case '/sensors':
