@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Title from '../../utils/Title'
 import './User.css'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 interface UserInfo {
   nombre: string
@@ -13,6 +15,8 @@ interface UserInfo {
     cantidad: number
   }[]
 }
+
+const url = import.meta.env.VITE_URL_BACKEND
 
 const User = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
@@ -65,13 +69,61 @@ const User = () => {
     }
   }
 
-  const handleCambiarPassword = (e: React.FormEvent) => {
+  const handleCambiarPassword = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!passwordError.longitud && !passwordError.coincidencia && formPassword.nueva.length >= 8) {
-      // Aquí iría la lógica para cambiar la contraseña
-      setMostrarModalPassword(false)
-      setFormPassword({ actual: '', nueva: '', confirmar: '' })
-      setPasswordError({ longitud: false, coincidencia: false })
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      Swal.fire({
+        title: 'Error de autenticación',
+        text: 'Por favor, inicia sesión nuevamente',
+        icon: 'error'
+      })
+      // Aquí podrías redirigir al login
+      return
+    }
+
+    try {
+      const response = await axios.put(
+        `${url}/user/change-password`,
+        {
+          password: formPassword.actual,
+          new_password: formPassword.nueva,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      if (response.status === 200) {
+        setMostrarModalPassword(false)
+        setFormPassword({ actual: '', nueva: '', confirmar: '' })
+        setPasswordError({ longitud: false, coincidencia: false })
+        Swal.fire({
+          title: 'Contraseña actualizada',
+          icon: 'success'
+        })
+      }
+    } catch (error: any) {
+      console.error('Error detallado:', error.response || error)
+      
+      if (error.response?.status === 401) {
+        Swal.fire({
+          title: 'Error de autenticación',
+          text: 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente',
+          icon: 'error'
+        })
+        // Aquí podrías redirigir al login
+      } else {
+        Swal.fire({
+          title: 'Error al cambiar la contraseña',
+          text: 'La contraseña actual es incorrecta o hubo un problema de conexión',
+          icon: 'error'
+        })
+      }
     }
   }
 

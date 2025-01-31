@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import { useEffect, useState, useRef } from 'react';
+import { io, Socket } from 'socket.io-client';
 import SensorBox from './components/SensorBox';
 import './Sensor.css';
 
@@ -12,12 +12,19 @@ const initialSensorData = {
   Nivel_agua: { value: 0, unit: '%', imageUrl: '/assets/img/sensor/bucket.png' }
 };
 
+// Agregar esta interfaz para el historial
+interface HistoricalData {
+  timestamp: string;
+  value: number;
+}
+
 // Add this type definition at the top of the file, after the imports
 type SensorDataType = {
   [K in keyof typeof initialSensorData]: {
     value: number;
     unit: string;
     imageUrl: string;
+    history?: HistoricalData[]; // Agregar el historial
   };
 };
 
@@ -25,33 +32,53 @@ function Sensor() {
   const [sensorData, setSensorData] = useState<SensorDataType>(initialSensorData);
   const [isPowerOnPump, setIsPowerOnPump] = useState(false);
   const [isPowerOnNutrients, setIsPowerOnNutrients] = useState(false);
-
-  // Inicializar Socket.io
-  const socket = io("ws://localhost:8080");
-
-
+  const socketRef = useRef<Socket | null>(null);
 
   // Conectar a WebSocket y manejar eventos
   useEffect(() => {
+    // Inicializar Socket.io
+    socketRef.current = io("http://localhost:8080", {
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+    });
+
+    const socket = socketRef.current;
+
     socket.on('connect', () => {
       console.log('Conectado al servidor WebSocket');
     });
 
-    socket.on('disconnect', () => {
-      console.log('Desconectado del servidor WebSocket');
+    socket.on('connect_error', (error) => {
+      console.log('Error de conexión:', error);
     });
 
     // Evento que actualiza los datos de los sensores
     socket.on('sensor_data', (data) => {
       console.log('Datos de sensores recibidos:', data);
-      setSensorData((prevData) => ({
-        ...prevData,
-        Temperatura: { ...prevData.Temperatura, value: data.Temperatura || prevData.Temperatura.value },
-        Humedad: { ...prevData.Humedad, value: data.Humedad || prevData.Humedad.value },
-        pH: { ...prevData.pH, value: data.pH || prevData.pH.value },
-        TDS: { ...prevData.TDS, value: data.TDS || prevData.TDS.value },
-        Nivel_agua: { ...prevData.Nivel_agua, value: data.Nivel_agua || prevData.Nivel_agua.value }
-      }));
+      const timestamp = new Date().toLocaleTimeString();
+      
+      setSensorData((prevData) => {
+        const newData = { ...prevData };
+        
+        // Actualizar cada sensor con su nuevo valor e historial
+        Object.keys(data).forEach((key) => {
+          if (key in newData) {
+            const sensorKey = key as keyof SensorDataType;
+            const currentHistory = newData[sensorKey].history || [];
+            newData[sensorKey] = {
+              ...newData[sensorKey],
+              value: data[key] || newData[sensorKey].value,
+              history: [...currentHistory, {
+                timestamp,
+                value: data[key] || newData[sensorKey].value
+              }].slice(-20) // Mantener solo los últimos 20 registros
+            };
+          }
+        });
+        
+        return newData;
+      });
     });
 
     // Evento que actualiza el estado de la bomba
@@ -61,14 +88,17 @@ function Sensor() {
     });
 
     return () => {
-      socket.disconnect();
+      if (socket) {
+        socket.disconnect();
+        socketRef.current = null;
+      }
     };
-  }, [socket]);
+  }, []);
 
-  // Manejar el encendido/apagado de la bomba de agua
+  // Actualizar el manejador para usar socketRef
   const handlePowerOnPump = () => {
     const command = isPowerOnPump ? 'off' : 'on';
-    socket.emit('pump_command', command);
+    socketRef.current?.emit('pump_command', command);
     console.log(`Comando de bomba enviado: ${command}`);
   };
 
@@ -120,6 +150,7 @@ function Sensor() {
               value={sensorData[key as keyof SensorDataType].value}
               unit={sensorData[key as keyof SensorDataType].unit}
               imageUrl={sensorData[key as keyof SensorDataType].imageUrl}
+              historicalData={sensorData[key as keyof SensorDataType].history || []}
             />
           ))}
         </div>

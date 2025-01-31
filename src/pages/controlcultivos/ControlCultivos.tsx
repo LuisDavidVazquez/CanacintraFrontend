@@ -58,14 +58,14 @@ const ControlCultivos = () => {
       updatedAt: '2025-03-15',      // Igual a createdAt al inicio
       estimatedHarvestDate: '2025-04-15',
       image: '/assets/img/plants/lettuce.png'
-    },
-    {
+    },{
       id: 2,
       slot: 2,
       category: 'Rúcula',
-      status: 'cosechado',
+      status: 'creciendo',
       createdAt: '2025-02-01',      // Fecha de siembra en formato YYYY-MM-DD
-      updatedAt: '2025-03-15',      // Fecha en que se cosechó
+      updatedAt: '2025-02-01',      // Igual a createdAt al inicio
+      estimatedHarvestDate: '2025-04-15',
       image: '/assets/img/plants/rucula.png'
     },
     {
@@ -151,7 +151,16 @@ const ControlCultivos = () => {
         updatedAt: '2025-02-20',
         estimatedHarvestDate: '2025-03-10',
         image: '/assets/img/plants/cilantro.png'
-    }
+    },
+    {
+      id: 11,
+      slot: 11,
+      category: 'Rúcula',
+      status: 'cosechado',
+      createdAt: '2025-02-01',      // Fecha de siembra en formato YYYY-MM-DD
+      updatedAt: '2025-03-15',      // Fecha en que se cosechó
+      image: '/assets/img/plants/rucula.png'
+    },
   ]
 
 
